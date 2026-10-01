@@ -85,3 +85,24 @@ describe("Backstage passes", () => {
     expect(items[0].quality).toBe(0);
   });
 });
+
+describe("Conjured", () => {
+  it("les produits Conjured voient leur qualités se dégrader deux fois plus vite", () => {
+    const gildedRose = new GildedRose([new Item("Conjured Dagger", 5, 3)]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(4);
+    expect(items[0].quality).toBe(1);
+  });
+  it("la qualite d'un produit Conjured ne peut jamais etre negative", () => {
+    const gildedRose = new GildedRose([new Item("Conjured Dagger", 1, 1)]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(0);
+    expect(items[0].quality).toBe(0);
+  });
+  it("une fois la date de peremption passee la qualite d'un objet Conjured se degrade 4*plus vite", () => {
+    const gildedRose = new GildedRose([new Item("Conjured Dagger", 0, 5)]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(-1);
+    expect(items[0].quality).toBe(1);
+  });
+});

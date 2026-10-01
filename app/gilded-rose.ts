@@ -35,8 +35,24 @@ export class GildedRose {
   sellInDown(item: Item) {
     item.sellIn = item.sellIn - 1;
   }
+  qualityDownCheckFirst(item: Item, number: number) {
+    for (let i = 0; i < number; i++) {
+      item.quality > 0 && this.qualityDown(item);
+    }
+  }
+  qualityDownCheckFirstSellInNeg(item: Item, number: number) {
+    for (let i = 0; i < number; i++) {
+      item.sellIn < 0 && item.quality > 0 && this.qualityDown(item);
+    }
+  }
   updateQuality() {
     this.items.forEach((item) => {
+      if (item.name.includes("Conjured")) {
+        this.qualityDownCheckFirst(item, 2);
+        this.sellInDown(item);
+        this.qualityDownCheckFirstSellInNeg(item, 2);
+        return this.items;
+      }
       switch (item.name) {
         case "Sulfuras, Hand of Ragnaros":
           break;
@@ -52,73 +68,15 @@ export class GildedRose {
           item.sellIn < 0 && (item.quality = item.quality - item.quality);
           break;
         default:
-          item.quality > 0 && this.qualityDown(item);
+          this.qualityDownCheckFirst(item, 1);
           this.sellInDown(item);
-          item.sellIn < 0 && item.quality > 0 && this.qualityDown(item);
+          this.qualityDownCheckFirstSellInNeg(item, 1);
           break;
       }
     });
 
     return this.items;
   }
-
-  // updateQualityOld() {
-  //   for (let i = 0; i < this.items.length; i++) {
-  //     if (
-  //       this.items[i].name != "Aged Brie" &&
-  //       this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
-  //     ) {
-  //       if (this.items[i].quality > 0) {
-  //         if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-  //           this.items[i].quality = this.items[i].quality - 1;
-  //         }
-  //       }
-  //     } else {
-  //       if (this.items[i].quality < 50) {
-  //         this.items[i].quality = this.items[i].quality + 1;
-  //         if (
-  //           this.items[i].name == "Backstage passes to a TAFKAL80ETC concert"
-  //         ) {
-  //           if (this.items[i].sellIn < 11) {
-  //             if (this.items[i].quality < 50) {
-  //               this.items[i].quality = this.items[i].quality + 1;
-  //             }
-  //           }
-  //           if (this.items[i].sellIn < 6) {
-  //             if (this.items[i].quality < 50) {
-  //               this.items[i].quality = this.items[i].quality + 1;
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //     if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-  //       this.items[i].sellIn = this.items[i].sellIn - 1;
-  //     }
-  //     if (this.items[i].sellIn < 0) {
-  //       if (this.items[i].name != "Aged Brie") {
-  //         if (
-  //           this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
-  //         ) {
-  //           if (this.items[i].quality > 0) {
-  //             if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-  //               this.items[i].quality = this.items[i].quality - 1;
-  //             }
-  //           }
-  //         } else {
-  //           this.items[i].quality =
-  //             this.items[i].quality - this.items[i].quality;
-  //         }
-  //       } else {
-  //         if (this.items[i].quality < 50) {
-  //           this.items[i].quality = this.items[i].quality + 1;
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return this.items;
-  // }
 }
 
 // TOO MUCH REFACTORING UNFORTUNATELY
