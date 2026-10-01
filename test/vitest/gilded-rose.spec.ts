@@ -29,4 +29,18 @@ describe("Gilded Rose", () => {
     expect(items[0].sellIn).toBe(-2);
     expect(items[0].quality).toBe(5);
   });
+  it("la qualite d'un produit ne depasse jamais 50", () => {
+    const gildedRose = new GildedRose([new Item("Aged Brie", -1, 50)]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(-2);
+    expect(items[0].quality).toBe(50);
+  });
+  it("sulfuras est un objet legendaire, il n'a pas de date de peremption et ne perd jamais en qualite", () => {
+    const gildedRose = new GildedRose([
+      new Item("Sulfuras, Hand of Ragnaros", 50, 50),
+    ]);
+    let items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(50);
+    expect(items[0].quality).toBe(50);
+  });
 });
