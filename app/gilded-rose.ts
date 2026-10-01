@@ -24,11 +24,6 @@ export class GildedRose {
     item.quality = item.quality - 1;
   }
   qualityBackstage(item: Item) {
-    // if (item.sellIn < 11) {
-    //   if (item.quality < 50) {
-    //     this.qualityUpp(item);
-    //   }
-    // }
     item.sellIn < 11 && item.quality < 50 && this.qualityUpp(item);
     item.sellIn < 6 && item.quality < 50 && this.qualityUpp(item);
   }
@@ -78,44 +73,3 @@ export class GildedRose {
     return this.items;
   }
 }
-
-// TOO MUCH REFACTORING UNFORTUNATELY
-// updateQuality() {
-//   this.items.forEach((item) => {
-//     switch (item.name) {
-//       case "Sulfuras, Hand of Ragnaros":
-//         break;
-//       case "Aged Brie":
-//         item.quality < 50 && item.sellIn > 0 && (item.quality += 1);
-//         item.quality < 50 && item.sellIn <= 0 && (item.quality += 2);
-//         item.sellIn -= 1;
-//         item.quality = Math.min(item.quality, 50);
-//         break;
-//       case "Backstage passes to a TAFKAL80ETC concert":
-//         switch (true) {
-//           case item.sellIn > 10:
-//             item.quality < 50 && (item.quality += 1);
-//             break;
-//           case item.sellIn > 5:
-//             item.quality < 50 && (item.quality += 2);
-//             break;
-//           case item.sellIn > 0:
-//             item.quality < 50 && (item.quality += 3);
-//             break;
-//           default:
-//             item.quality < 50 && (item.quality += 1);
-//             break;
-//         }
-//         item.sellIn -= 1;
-//         item.sellIn < 0 && (item.quality = 0);
-//         item.quality = Math.min(item.quality, 50);
-//         break;
-//       default:
-//         item.quality > 0 && item.sellIn > 0 && (item.quality -= 1);
-//         item.quality > 0 && item.sellIn <= 0 && (item.quality -= 2);
-//         item.sellIn -= 1;
-//         break;
-//     }
-//   });
-//   return this.items;
-// }
